@@ -79,6 +79,9 @@ limitations under the License.
       <h1>Space Missions</h1>
     </header>
     <main>
+      <section id="installBanner" class="banner">
+        <button id="installBtn">Install app</button>
+      </section>
       <section class="card">
         <div class="img-container">
           <!-- CC0 image from https://unsplash.com/photos/NuE8Nu3otjo -->
@@ -148,6 +151,29 @@ limitations under the License.
             });
         });
       }
+    </script>
+    <script>
+      let deferredPrompt;
+      window.addEventListener("beforeInstallprompt", event => {
+        event.preventDefault();
+
+        deferredPrompt = event;
+        document
+          .querySelector("#installBtn")
+          .addEventListener("click", event => {
+            deferredPrompt.prompt();
+
+            deferredPrompt.userChoice.then(choiceResult => {
+              if (choiceResult.outcome === "accepted") {
+                console.log("User accepted the A2HS prompt");
+              } else {
+                console.log("User dismissed the A2HS prompt");
+              }
+              deferredPrompt = null;
+            });
+          });
+        document.querySelector("#installBanner").style.display = "flex";
+      });
     </script>
   </body>
 </html>

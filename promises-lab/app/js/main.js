@@ -53,7 +53,10 @@ const app = (() => {
   function flagChain(country) {
     // use the promise
     return getImageName(country)
-      .then(logSuccess)
+      .catch(fallbackName)
+      .then(fetchFlag)
+      .then(processFlag)
+      .then(appendFlag)
       .catch(logError);
   }
 

@@ -75,8 +75,19 @@ imgButton.addEventListener("click", fetchImage);
 // Fetch text ----------
 
 function fetchText() {
-  // TODO
+  fetch("examples/words.txt")
+    .then(validateResponse)
+    .then(readResponseAsText)
+    .then(showText);
 }
+
+const readResponseAsText = response => response.text();
+
+const showText = readResponseAsText => {
+  const message = document.getElementById("message");
+  message.textContent = readResponseAsText;
+};
+
 const textButton = document.getElementById("text-btn");
 textButton.addEventListener("click", fetchText);
 

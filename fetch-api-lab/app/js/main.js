@@ -94,8 +94,20 @@ textButton.addEventListener("click", fetchText);
 // HEAD request ----------
 
 function headRequest() {
-  // TODO
+  fetch("examples/words.txt", {
+    method: "HEAD"
+  })
+    .then(validateResponse)
+    .then(logSize)
+    .catch(logError);
 }
+
+function logSize(response) {
+  const url = response.url;
+  const size = response.headers.get("content-length");
+  console.log(`${url} is ${size} bytes`);
+}
+
 const headButton = document.getElementById("head-btn");
 headButton.addEventListener("click", headRequest);
 

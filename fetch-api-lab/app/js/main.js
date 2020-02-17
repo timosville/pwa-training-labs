@@ -51,7 +51,23 @@ jsonButton.addEventListener("click", fetchJSON);
 // Fetch Image ----------
 
 function fetchImage() {
-  // TODO
+  fetch("examples/fetching.jpg")
+    .then(validateResponse)
+    .then(readResponseAsBlob)
+    .then(showImage)
+    .catch(logError);
+}
+
+function showImage(responseAsBlob) {
+  const container = document.getElementById("img-container");
+  const imgElem = document.createElement("img");
+  container.appendChild(imgElem);
+  const imgUrl = URL.createObjectURL(responseAsBlob);
+  imgElem.src = imgUrl;
+}
+
+function readResponseAsBlob(response) {
+  return response.blob();
 }
 const imgButton = document.getElementById("img-btn");
 imgButton.addEventListener("click", fetchImage);

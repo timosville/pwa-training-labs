@@ -116,21 +116,12 @@ headButton.addEventListener("click", headRequest);
 /* NOTE: Never send unencrypted user credentials in production! */
 function postRequest() {
   const formData = new FormData(document.getElementById("msg-form"));
-  const messageHeaders = new Headers({
-    "Content-Type": "application/json",
-    // 'Content-Length': 'kittens' // Content-Length can't be modified!
-    "X-Custom": "hello world"
-    // 'Y-Custom': 'this will not work' // Y-Custom is not accepted by our echo server!
-  });
-  fetch("http://localhost:5000/", {
+  fetch("http://localhost:5001/", {
     method: "POST",
-    // body: formData,
-    body: JSON.stringify({ lab: "fetch", status: "fun" }),
-    headers: messageHeaders
+    body: formData,
+    mode: "no-cors"
   })
-    .then(validateResponse)
-    .then(readResponseAsText)
-    .then(showText)
+    .then(logResult)
     .catch(logError);
 }
 const postButton = document.getElementById("post-btn");

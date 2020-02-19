@@ -18,6 +18,19 @@ if (workbox) {
       ]
     })
   );
+
+  const articleHandler = workbox.strategies.networkFirst({
+    cacheName: "articles-cache",
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 50
+      })
+    ]
+  });
+
+  workbox.routing.registerRoute(/(.*)article(.*)\.html/, args => {
+    return articleHandler.handle(args);
+  });
 } else {
   console.log("Workbox didn't load");
 }

@@ -29,7 +29,14 @@ if (workbox) {
   });
 
   workbox.routing.registerRoute(/(.*)article(.*)\.html/, args => {
-    return articleHandler.handle(args);
+    return articleHandler.handle(args).then(response => {
+      if (!response) {
+        return caches.match("pages/offline.html");
+      } else if (response.status === 404) {
+        return caches.match("pages/404.html");
+      }
+      return response;
+    });
   });
 } else {
   console.log("Workbox didn't load");

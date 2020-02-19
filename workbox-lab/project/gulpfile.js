@@ -29,7 +29,9 @@ const buildSw = () => {
         "index.html",
         "js/animation.js",
         "images/home/*.jpg",
-        "images/icon/*.svg"
+        "images/icon/*.svg",
+        "pages/offline.html",
+        "pages/404.html"
       ]
     })
     .then(resources => {
@@ -42,7 +44,6 @@ const buildSw = () => {
       console.log("Uh oh 😬", err);
     });
 };
-
 gulp.task("build-sw", buildSw);
 
 // Clean "build" directory

@@ -29,6 +29,8 @@ self.addEventListener("fetch", event => {
         if (response) {
           console.log("Found ", event.request.url, " in cache");
           return response;
+        } else if (response.status === 404) {
+          return caches.match("pages/404.html");
         }
         console.log("Network request for ", event.request.url);
         return fetch(event.request).then(response => {

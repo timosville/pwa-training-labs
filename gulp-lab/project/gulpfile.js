@@ -1,4 +1,5 @@
 const gulp = require("gulp");
+const browserSync = require("browser-sync");
 
 const copy = () => {
   return gulp
@@ -6,4 +7,12 @@ const copy = () => {
     .pipe(gulp.dest("build"));
 };
 
-gulp.task("copy", copy);
+const serve = () => {
+  return browserSync.init({
+    server: "build",
+    open: false,
+    port: 3000
+  });
+};
+
+gulp.task("buildAndServe", gulp.series(copy, serve));
